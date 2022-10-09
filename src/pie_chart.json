@@ -1,5 +1,5 @@
 {
-    "$schema": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/data/weather_raw0.csv",
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",  
     "width": 700,
   "height": 400,
   "config": {
@@ -13,7 +13,7 @@
       "title": {"font": "Open Sans", "subtitleFont": "Open Sans"}
   },"background": "#f2f3f7",
   "data": {
-    "url": "../data/weather_raw0.csv"
+    "url": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/data/weather_raw0.csv"
   },
     "params": [
         {
