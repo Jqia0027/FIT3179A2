@@ -1,0 +1,78 @@
+{
+    "data": {
+        "url": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/data/weather_raw0.csv"
+      },
+      "params": [
+        {
+          "name": "City_selection",
+          "bind": {
+            "input": "select", 
+            "options": ["Albury", "BadgerysCreek", "Cobar", "CoffsHarbour", "Moree", "Newcastle", "NorahHead", "NorfolkIsland", "Penrith", "Richmond", "Sydney", "SydneyAirport", "WaggaWagga", "Williamtown", "Wollongong", "Canberra", "Tuggeranong", "MountGinini", "Ballarat", "Bendigo", "Sale", "MelbourneAirport", "Melbourne", "Mildura", "Nhil", "Portland", "Watsonia", "Dartmoor", "Brisbane", "Cairns", "GoldCoast", "Townsville", "Adelaide", "MountGambier", "Nuriootpa", "Woomera", "Albany", "Witchcliffe", "PearceRAAF", "PerthAirport", "Perth", "SalmonGums", "Walpole", "Hobart", "Launceston", "AliceSprings", "Darwin", "Katherine", "Uluru"],
+            "labels": ["Albury", "BadgerysCreek", "Cobar", "CoffsHarbour", "Moree", "Newcastle", "NorahHead", "NorfolkIsland", "Penrith", "Richmond", "Sydney", "SydneyAirport", "WaggaWagga", "Williamtown", "Wollongong", "Canberra", "Tuggeranong", "MountGinini", "Ballarat", "Bendigo", "Sale", "MelbourneAirport", "Melbourne", "Mildura", "Nhil", "Portland", "Watsonia", "Dartmoor", "Brisbane", "Cairns", "GoldCoast", "Townsville", "Adelaide", "MountGambier", "Nuriootpa", "Woomera", "Albany", "Witchcliffe", "PearceRAAF", "PerthAirport", "Perth", "SalmonGums", "Walpole", "Hobart", "Launceston", "AliceSprings", "Darwin", "Katherine", "Uluru"],
+            "name": "City: "
+          }, "value": "Albury"
+        }
+      ],
+    "transform": [
+        {
+          "filter":  "City_selection == null || City_selection == datum.Location && datum.RainToday!=0"
+        }],
+        "vconcat": [{
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "aggregate": "mean",
+            "field": "Humidity3pm",
+            "type": "quantitative"
+          },
+          "x": {
+            "timeUnit": "month",
+            "field": "Date",
+            "type": "temporal",
+            "scale": {}
+          },
+          "color": {
+            "field": "RainToday",
+            "type": "nominal"
+          }
+        },
+        "config": {
+          "line": {
+            "point": true
+          },
+          "scale": {
+            "useUnaggregatedDomain": true
+          }
+        }
+      },
+      
+      {
+        "mark": "line",
+        "encoding": {
+          "y": {
+            "aggregate": "mean",
+            "field": "MaxTemp",
+            "type": "quantitative"
+          },
+          "x": {
+            "timeUnit": "month",
+            "field": "Date",
+            "type": "temporal",
+            "scale": {}
+          },
+          "color": {
+            "field": "RainToday",
+            "type": "nominal"
+          }
+        },
+        "config": {
+          "line": {
+            "point": true
+          },
+          "scale": {
+            "useUnaggregatedDomain": true
+          }
+        }
+      }]
+
+  }
