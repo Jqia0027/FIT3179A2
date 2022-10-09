@@ -1,0 +1,53 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 500,
+    "height": 300,
+    "title": "Average temperature in Australia (Celsius)",
+    "data": {
+      "url": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/data/processed_state.csv"
+    },
+    "params": [
+      {
+        "name": "Month_selection",
+        "bind": {
+          "input": "select",
+          "options": [1,2,3,4,5,6,7,8,9,10,11,12],
+          "labels": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+          "name": "Month: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "filter": "Month_selection == null || datum.Month == Month_selection"
+      },
+      {
+        "lookup": "State",
+        "from": {
+            "data": {
+                "url": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/src/australia_map.json",
+                "format": {"type": "topojson", "feature": "states"}
+              },
+          "key": "properties.STATE_NAME"
+        },
+          "as": "geo"
+      }, 
+      {
+      "joinaggregate": [{
+        "op": "average",
+        "field": "temp",
+        "as": "TempAVG"
+      }],"groupby": ["State"]}
+    ],
+    "projection": {"type": "equirectangular"},
+    "mark": "geoshape",
+    "encoding": {
+      "shape": {"field": "geo", "type": "geojson"},
+      "color": {"field": "TempAVG", "type": "quantitative","scale": {"range": ["black", "steelblue", "orange"]}},
+      "tooltip": [
+        {"field": "State", "type": "nominal"},
+        {"field": "TempAVG", "type": "quantitative"}
+      ]
+    }
+  }
+  

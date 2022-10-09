@@ -1,0 +1,78 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/data/weather_raw0.csv",
+    "width": 700,
+  "height": 400,
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+      "axis": {"labelFont": "Open Sans", "titleFont": "Open Sans"},
+      "legend": {"labelFont": "Open Sans", "titleFont": "Open Sans"},
+      "header": {"labelFont": "Open Sans", "titleFont": "Open Sans"},
+      "mark": {"font": "Open Sans"},
+      "title": {"font": "Open Sans", "subtitleFont": "Open Sans"}
+  },"background": "#f2f3f7",
+  "data": {
+    "url": "../data/weather_raw0.csv"
+  },
+    "params": [
+        {
+          "name": "City_selection",
+          "bind": {
+            "input": "select", 
+            "options": ["Albury", "BadgerysCreek", "Cobar", "CoffsHarbour", "Moree", "Newcastle", "NorahHead", "NorfolkIsland", "Penrith", "Richmond", "Sydney", "SydneyAirport", "WaggaWagga", "Williamtown", "Wollongong", "Canberra", "Tuggeranong", "MountGinini", "Ballarat", "Bendigo", "Sale", "MelbourneAirport", "Melbourne", "Mildura", "Nhil", "Portland", "Watsonia", "Dartmoor", "Brisbane", "Cairns", "GoldCoast", "Townsville", "Adelaide", "MountGambier", "Nuriootpa", "Woomera", "Albany", "Witchcliffe", "PearceRAAF", "PerthAirport", "Perth", "SalmonGums", "Walpole", "Hobart", "Launceston", "AliceSprings", "Darwin", "Katherine", "Uluru"],
+            "labels": ["Albury", "BadgerysCreek", "Cobar", "CoffsHarbour", "Moree", "Newcastle", "NorahHead", "NorfolkIsland", "Penrith", "Richmond", "Sydney", "SydneyAirport", "WaggaWagga", "Williamtown", "Wollongong", "Canberra", "Tuggeranong", "MountGinini", "Ballarat", "Bendigo", "Sale", "MelbourneAirport", "Melbourne", "Mildura", "Nhil", "Portland", "Watsonia", "Dartmoor", "Brisbane", "Cairns", "GoldCoast", "Townsville", "Adelaide", "MountGambier", "Nuriootpa", "Woomera", "Albany", "Witchcliffe", "PearceRAAF", "PerthAirport", "Perth", "SalmonGums", "Walpole", "Hobart", "Launceston", "AliceSprings", "Darwin", "Katherine", "Uluru"],
+            "name": "City: "
+          }, "value": "Albury"
+        }
+      ],
+      "transform": [
+        {
+          "filter":  "City_selection == datum.Location && datum.WindDir3pm != 0"
+        },
+        {
+          "joinaggregate": [
+            { 
+              "op": "sum",
+              "field": "Rainfall",
+              "as": "average_value"
+            }
+          ],
+          "groupby": [
+            "Country", "WindDir3pm", "average_value"
+          ]
+        }
+    ],
+    "layer": [{
+      "mark": {"type": "arc", "innerRadius": 20, "stroke":null}
+    },{
+      "mark": {"type": "text", "radiusOffset": 11},
+      "encoding": {
+        "text": {"field": "average_value", "type": "quantitative","format": ".2f"}
+      }
+    }],
+    "encoding": {
+      "theta": {"field": "average_value", "type": "quantitative", "stack": true, "aggregate": "mean"},
+      "radius": {"field": "average_value", "scale": {"type": "sqrt", "zero": true, "rangeMin": 20}, "aggregate": "mean"},
+      "color": {"field": "WindDir3pm", "type": "nominal",
+      "scale": {"range": ["#E69F00", "#56B4E9", "#009E73", "#D55E00", "#CC79A7", "#0072B2"]},
+      "legend": {
+      
+        "offset": -150
+      }},
+      "tooltip": [
+        {
+            "field": "WindDir3pm",
+            "type": "nominal",
+            "title": "Wind direction"
+        },
+        {
+            "field": "average_value",
+            "type": "quantitative",
+            "format": ".2f",
+            "title": "Average Value"
+        }   
+            ]
+    }
+  }
+  

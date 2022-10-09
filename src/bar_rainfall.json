@@ -1,0 +1,52 @@
+{
+    "data": {
+        "url": "https://raw.githubusercontent.com/Jqia0027/FIT3179A2/main/data/weather_raw0.csv"
+      },
+    "mark": "bar",
+    "encoding": {
+      "y": {
+        "field": "Location",
+        "type": "nominal",
+        "sort": "-x",
+        "scale": {
+          "rangeStep": 12
+        }
+      },
+      "x": {
+        "aggregate": "sum",
+        "field": "Rainfall",
+        "type": "quantitative",
+        "axis": {
+          "orient": "top"
+        }
+      },
+      "color": {
+        "title": "Mean Humidity at 3pm",
+        "aggregate": "mean",
+        "field": "Humidity3pm",
+        "type": "quantitative"
+      },
+      "tooltip": [
+        {
+            "field": "Location",
+            "type": "nominal",
+            "title": "Location"
+        },
+        {
+            "field": "Rainfall",
+            "aggregate": "sum",
+            "type": "quantitative",
+            "format": ".2f",
+            "title": "Total rainfall"
+        }   
+      ]
+    },
+    "config": {
+      "line": {
+        "point": true
+      },
+      "scale": {
+        "useUnaggregatedDomain": true
+      }
+    }
+  }
